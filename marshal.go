@@ -156,7 +156,7 @@ func UnmarshalFunc[T any](opts map[string]T, cfg *Config) *json.Unmarshalers {
 
 	wrapFunc := cfg.WrapFunc
 	if wrapFunc == nil {
-		wrapFunc = WrapInlineObjects
+		wrapFunc = WrapNested
 	}
 
 	// Hack:
