@@ -282,15 +282,28 @@ func (w alwaysNestWrappedValue) Value() jsontext.Value {
 	return w.NestedValue
 }
 
-// WrapInlineObjects wraps a value such that JSON object fields are inlined
-// along with the type, or nested otherwise.
-//
-// Specifically:
+// WrapInline wraps a oneof value with default "inline" behavior, specifically:
 //
 //   - Type is stored under the "_type" key
 //   - JSON object values are inlined into the same object as the "_type" key
 //   - All non-object JSON values are nested under the "_value" key
-func WrapInlineObjects(typ string, v jsontext.Value) WrappedValue {
+//
+// The marshaled JSON output looks like:
+//
+//	{
+//		"my_stringers": [
+//			{
+//				"_type": "crypto.Hash",
+//				"_value": 5
+//			},
+//			{
+//				"_type": "url.URL",
+//				"Scheme": "https",
+//				"Host": "example.com"
+//			},
+//		]
+//	}
+func WrapInline(typ string, v jsontext.Value) WrappedValue {
 	if v.Kind() == '{' {
 		// inline objects
 		return inlineObjectsWrappedValue{

@@ -89,14 +89,14 @@ opts := map[string]fmt.Stringer{
 
 ```go
 cfg := oneof.Config{
-  WrapFunc: oneof.WrapAlwaysNest,
+  WrapFunc: oneof.WrapNested,
 }
 marshalFunc := oneof.MarshalFunc(opts, cfg)
 ```
 
 If `Config.WrapFunc` is unset, `MarshalFunc` and `UnmarshalFunc` default to `WrapNested`, which wraps encoded values under the `"_value"` key.
 
-The `oneof` package also defines `WrapInlineObjects`, which inlines the fields of JSON object values, e.g.,:
+The `oneof` package also defines `WrapInline`, which inlines the fields of JSON object values, e.g.,:
 
 ```jsonc
 {

@@ -93,7 +93,7 @@
 // If WrapFunc is nil, [MarshalFunc] and [UnmarshalFunc] default to
 // [WrapNested], which wraps encoded values under the "_value" key.
 //
-// [oneof] also defines [WrapInlineObjects], which inlines the fields of JSON
+// [oneof] also defines [WrapInline], which inlines the fields of JSON
 // object values, e.g.,:
 //
 //	{
