@@ -220,9 +220,12 @@ func UnmarshalFunc[T any](opts map[string]T, cfg *Config) *json.Unmarshalers {
 		// option
 		optPtr := &opt
 		v := w.Value()
-		*skipNextPtr = true // avoid recursion in Unmarshal below
-		if err := json.Unmarshal(v, optPtr, jsonopts); err != nil {
-			return fmt.Errorf("failed to marshal value to option type %T: %w", opt, err)
+
+		if len(v) != 0 {
+			*skipNextPtr = true // avoid recursion in Unmarshal below
+			if err := json.Unmarshal(v, optPtr, jsonopts); err != nil {
+				return fmt.Errorf("failed to marshal value to option type %T: %w", opt, err)
+			}
 		}
 
 		*ptr = opt
